@@ -22,8 +22,13 @@ var canJump = true
 var isCrouching = false
 var calledClimb = false
 
-enum STATES {IDLE, WALK, RUN, JUMP, CROUCHED, HANGING, SLIDE}
-var cur_state = STATES.IDLE
+# States
+var IDLE = false
+var RUN = false
+var JUMP = false
+var CROUCHED = false
+var HANGING = false
+var SLIDE = false
 
 func _ready():
 	bodyAnim.play("Idle")
@@ -39,34 +44,23 @@ func _physics_process(delta: float) -> void:
 	moveDirection = moveDirection.rotated(Vector3.UP, springArm.rotation.y).normalized()
 	
 	if Input.is_action_pressed("run"):
-		cur_state = STATES.RUN
 		speed = runSpeed
+		RUN = true
 	else:
-		cur_state = STATES.WALK
 		speed = walkSpeed
+		RUN = false
 	
-	if moveDirection.x == 0 and moveDirection.z == 0:
-		if bodyAnim.current_animation == "Walking" or bodyAnim.current_animation == "FastRun":
-			cur_state = STATES.IDLE
-			bodyAnim.play("Idle")
-	else:
-		if bodyAnim.current_animation == "Idle" or bodyAnim.current_animation == "FastRun":
-			if speed == walkSpeed:
-				cur_state = STATES.WALK
-				bodyAnim.play("Walking")
-		if bodyAnim.current_animation == "Idle" or bodyAnim.current_animation == "Walking":
-			if speed == runSpeed:
-				cur_state = STATES.RUN
-				bodyAnim.play("FastRun")
+	IDLE = true if moveDirection.x == 0 and moveDirection.z == 0 else false
 	
 	if Input.is_action_just_pressed("crouch"):
-		if speed == walkSpeed:
-			cur_state = STATES.CROUCHED
-			bodyAnim.play("Crouched")
-		else:
-			cur_state = STATES.SLIDE
-			bodyAnim.play("Slide")
-
+		if not JUMP and not SLIDE:
+			if CROUCHED:
+				CROUCHED = false
+			elif speed == walkSpeed:
+				CROUCHED = true
+			else:
+				SLIDE = true
+				bodyAnim.play("Slide")
 
 	velocity.x = moveDirection.x * speed
 	velocity.z = moveDirection.z * speed
@@ -77,7 +71,7 @@ func _physics_process(delta: float) -> void:
 	if isJumping:
 		velocity.y = jumpStrength
 		snapVector = Vector3.ZERO
-		cur_state = STATES.JUMP
+		JUMP = true
 		if speed == walkSpeed:
 			bodyAnim.play("Jump")
 		else:
@@ -87,6 +81,7 @@ func _physics_process(delta: float) -> void:
 	velocity = move_and_slide_with_snap(velocity, snapVector, Vector3.UP, true)
 	
 	if Input.is_action_pressed("jump") and can_climb():
+		bodyAnim.play("HangToCrouch")
 		grab_ledge()
 	
 	if velocity.length() > 0.2:
@@ -103,7 +98,29 @@ func _process(_delta: float) -> void:
 	springArm.translation = translation
 
 func handle_body_anim():
-	pass
+	#if JUMP:
+		#if speed == walkSpeed:
+			#bodyAnim.play("Jump")
+		#else:
+			#bodyAnim.play("RunJump")
+	#elif HANGING:
+		#bodyAnim.play("HangToCrouch")
+	#elif SLIDE:
+		#bodyAnim.play("Slide")
+	#else:
+	if bodyAnim.current_animation != "Jump" and bodyAnim.current_animation != "RunJump" and bodyAnim.current_animation != "HangToCrouch" and bodyAnim.current_animation != "Slide":
+		if CROUCHED:
+			if IDLE:
+				bodyAnim.play("Crouched")
+			else:
+				bodyAnim.play("CrouchedWalk")
+		else:
+			if IDLE:
+				bodyAnim.play("Idle")
+			elif RUN:
+				bodyAnim.play("FastRun")
+			else:
+				bodyAnim.play("Walking")
 
 func can_climb() -> bool:
 	if not chestRay.is_colliding():
@@ -115,7 +132,6 @@ func can_climb() -> bool:
 
 func grab_ledge():
 	velocity = Vector3.ZERO
-	cur_state = STATES.HANGING
 	climb_ledge()
 
 func climb_ledge():
@@ -129,8 +145,6 @@ func climb():
 	springArm.camInputFrozen = true
 	var vMoveTime = 0.733
 	var hMoveTime = 0.4
-	bodyAnim.play("HangToCrouch")
-	# translation.y -= 1
 	if not isCrouching:
 		var verticalMovement = global_transform.origin + Vector3(0, 1.70, 0)
 		tween.interpolate_property(self, "global_transform:origin", null, verticalMovement, vMoveTime, Tween.TRANS_CUBIC, Tween.EASE_IN)
@@ -160,7 +174,9 @@ func ledge_climb_completed():
 
 func on_animation_finished(anim_name):
 	if anim_name == "Jump" or anim_name == "RunJump" or anim_name == "HangToCrouch" or anim_name == "Slide":
-		cur_state = STATES.IDLE
+		JUMP = false
+		CROUCHED = false
+		SLIDE = false
 		bodyAnim.play("Idle")
 
 # Not Used
