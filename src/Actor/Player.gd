@@ -29,7 +29,7 @@ var canJump = true
 var isCrouching = false
 
 var score = 0
-var timer = 2 * 60.0 # Max time, 2m
+var timer = 0
 
 # States
 var IDLE = false
@@ -40,7 +40,13 @@ var HANGING = false
 var SLIDE = false
 
 func _ready():
-	ltimer.set_text("2:00")
+	if GlobalSettings.gameMode == 1:
+		# Max time, 2m
+		timer = 2 * 60.0
+		ltimer.set_text("2:00")
+	elif GlobalSettings.gameMode == 2:
+		timer = 0
+		ltimer.set_text("0:00")
 	gravity = jumpGravity
 	bodyAnim.play("Idle")
 	var err = bodyAnim.connect("animation_finished", self, "on_animation_finished")
@@ -48,17 +54,29 @@ func _ready():
 		print("ERROR: Connection with bodyAnim")
 
 func _physics_process(delta: float) -> void:
-	timer -= delta
-	var minute = int(timer / 60)
-	var second = int(timer - minute * 60)
-	if second < 10:
-		ltimer.set_text(str(minute, ":0", second))
-	else:
-		ltimer.set_text(str(minute, ":", second))
 	lscore.set_text(str(score))
-	
-	if timer <= 0:
-		end_level()
+	if GlobalSettings.gameMode == 1:
+		timer -= delta
+		var minute = int(timer / 60)
+		var second = int(timer - minute * 60)
+		if second < 10:
+			ltimer.set_text(str(minute, ":0", second))
+		else:
+			ltimer.set_text(str(minute, ":", second))
+		
+		if timer <= 0:
+			end_level()
+	elif GlobalSettings.gameMode == 2:
+		timer += delta
+		var minute = int(timer / 60)
+		var second = int(timer - minute * 60)
+		if second < 10:
+			ltimer.set_text(str(minute, ":0", second))
+		else:
+			ltimer.set_text(str(minute, ":", second))
+		
+		if score >= 1:
+			end_level()
 	
 	var moveDirection = Vector3.ZERO
 	
@@ -216,7 +234,10 @@ func on_animation_finished(anim_name):
 			bodyAnim.play("Idle")
 
 func end_level():
-	GlobalSettings.ballsOnTime = score
+	if GlobalSettings.gameMode == 1:
+		GlobalSettings.ballsOnTime = score
+	elif GlobalSettings.gameMode == 2:
+		GlobalSettings.bestTime = timer
 	var err
 	err = sceneTree.change_scene(screen_path)
 	if err != OK:

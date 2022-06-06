@@ -1,0 +1,230 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://src/Actor/Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://src/Levels/Cube.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/Levels/Ramp.tscn" type="PackedScene" id=3]
+[ext_resource path="res://src/Levels/Collectable.tscn" type="PackedScene" id=4]
+[ext_resource path="res://src/Levels/WorldEnvironment.tscn" type="PackedScene" id=5]
+
+[sub_resource type="SpatialMaterial" id=1]
+albedo_color = Color( 0.545098, 0.686275, 0.811765, 1 )
+
+[sub_resource type="CubeMesh" id=2]
+material = SubResource( 1 )
+
+[sub_resource type="BoxShape" id=3]
+
+[node name="Level" type="Spatial"]
+
+[node name="WorldEnvironment" parent="." instance=ExtResource( 5 )]
+
+[node name="DirectionalLight" type="DirectionalLight" parent="WorldEnvironment"]
+transform = Transform( 0.927184, -0.214866, -0.30686, 0, -0.819152, 0.573577, -0.374607, -0.531811, -0.759504, 0, 0, 0 )
+light_energy = 2.0
+shadow_enabled = true
+shadow_color = Color( 0.6, 0.6, 0.6, 1 )
+
+[node name="Player" parent="." instance=ExtResource( 1 )]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 24, 0, 0 )
+jumpStrength = 10.0
+jumpGravity = 25.0
+floorGravity = 300.0
+
+[node name="SpringArm" parent="Player" index="3"]
+transform = Transform( -1, 2.26267e-08, -8.44439e-08, 0, 0.965926, 0.258819, 8.74227e-08, 0.258819, -0.965926, 0, 0, 0 )
+
+[node name="World" type="Node" parent="."]
+
+[node name="Floor" type="StaticBody" parent="World"]
+transform = Transform( 150, 0, 0, 0, 1, 0, 0, 0, 7.5, -100, -1, 0 )
+collision_layer = 2
+collision_mask = 0
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="MeshInstance" type="MeshInstance" parent="World/Floor"]
+mesh = SubResource( 2 )
+material/0 = null
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="World/Floor"]
+shape = SubResource( 3 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Limit" parent="World" instance=ExtResource( 2 )]
+transform = Transform( 0.1, 0, 0, 0, 25, 0, 0, 0, 7.5, 50, 25, 0 )
+visible = false
+
+[node name="Limit2" parent="World" instance=ExtResource( 2 )]
+transform = Transform( 150, 0, 0, 0, 25, 0, 0, 0, 0.1, -100, 25, -7.5 )
+visible = false
+
+[node name="Limit3" parent="World" instance=ExtResource( 2 )]
+transform = Transform( 0.1, 0, 0, 0, 25, 0, 0, 0, 7.5, -250, 25, 0 )
+visible = false
+
+[node name="Limit4" parent="World" instance=ExtResource( 2 )]
+transform = Transform( 150, 0, 0, 0, 25, 0, 0, 0, 0.1, -100, 25, 7.5 )
+visible = false
+
+[node name="Ramps" type="Node" parent="."]
+
+[node name="Cube" parent="Ramps" instance=ExtResource( 2 )]
+transform = Transform( 4, 0, 0, 0, 3, 0, 0, 0, 5, -32, 3, 0 )
+
+[node name="Cube3" parent="Ramps" instance=ExtResource( 2 )]
+transform = Transform( 17.5, 0, 0, 0, 2.1, 0, 0, 0, 5, -10.5, 2.1, 0 )
+
+[node name="Cube4" parent="Ramps" instance=ExtResource( 2 )]
+transform = Transform( 3, 0, 0, 0, 1.2, 0, 0, 0, 5, 10, 1.2, 0 )
+
+[node name="Ramp" parent="Ramps" instance=ExtResource( 3 )]
+transform = Transform( -2.5, 0, -7.54979e-07, 0, 1, 0, 3.77489e-07, 0, -5, -23, 5.2, 0 )
+
+[node name="Ramp2" parent="Ramps" instance=ExtResource( 3 )]
+transform = Transform( -2.5, 0, -7.54979e-07, 0, 1, 0, 3.77489e-07, 0, -5, 12, 3.4, 0 )
+
+[node name="Ramp3" parent="Ramps" instance=ExtResource( 3 )]
+transform = Transform( -2.5, 0, -7.54979e-07, 0, 1.35, 0, 3.77489e-07, 0, -5, 18, 1.35, 0 )
+
+[node name="Cube5" parent="Ramps" instance=ExtResource( 2 )]
+transform = Transform( 0.1, 0, 0, 0, 1.8, 0, 0, 0, 1.5, 7, 6, 3.5 )
+
+[node name="Cube6" parent="Ramps" instance=ExtResource( 2 )]
+transform = Transform( 0.1, 0, 0, 0, 1.1, 0, 0, 0, 2, 7, 6.7, 0 )
+
+[node name="Cube7" parent="Ramps" instance=ExtResource( 2 )]
+transform = Transform( 0.1, 0, 0, 0, 1.8, 0, 0, 0, 1.5, 7, 6, -3.5 )
+
+[node name="Cube13" parent="Ramps" instance=ExtResource( 2 )]
+transform = Transform( 0.1, 0, 0, 0, 1.8, 0, 0, 0, 1.5, -15, 6, 3.5 )
+
+[node name="Cube14" parent="Ramps" instance=ExtResource( 2 )]
+transform = Transform( 0.1, 0, 0, 0, 1.1, 0, 0, 0, 2, -15, 6.7, 0 )
+
+[node name="Cube15" parent="Ramps" instance=ExtResource( 2 )]
+transform = Transform( 0.1, 0, 0, 0, 1.8, 0, 0, 0, 1.5, -15, 6, -3.5 )
+
+[node name="Cube8" parent="Ramps" instance=ExtResource( 2 )]
+transform = Transform( 0.1, 0, 0, 0, 1.8, 0, 0, 0, 0.5, -4, 6, 4.5 )
+
+[node name="Cube9" parent="Ramps" instance=ExtResource( 2 )]
+transform = Transform( 0.1, 0, 0, 0, 1.1, 0, 0, 0, 1.5, -4, 6.7, 2.5 )
+
+[node name="Cube12" parent="Ramps" instance=ExtResource( 2 )]
+transform = Transform( 0.1, 0, 0, 0, 1.1, 0, 0, 0, 1.5, -4, 6.7, -2.5 )
+
+[node name="Cube10" parent="Ramps" instance=ExtResource( 2 )]
+transform = Transform( 0.1, 0, 0, 0, 1.8, 0, 0, 0, 0.5, -4, 6, -4.5 )
+
+[node name="Cube11" parent="Ramps" instance=ExtResource( 2 )]
+transform = Transform( 0.1, 0, 0, 0, 1.8, 0, 0, 0, 1, -4, 6, 0 )
+
+[node name="Pillars" type="Node" parent="."]
+
+[node name="PathL" parent="Pillars" instance=ExtResource( 2 )]
+transform = Transform( 2, 0, 0, 0, 2.5, 0, 0, 0, 1, -44, 2.5, 4 )
+
+[node name="PathL2" parent="Pillars" instance=ExtResource( 2 )]
+transform = Transform( 2, 0, 0, 0, 2.5, 0, 0, 0, 1, -52, 2.5, 4 )
+
+[node name="PathL3" parent="Pillars" instance=ExtResource( 2 )]
+transform = Transform( 2, 0, 0, 0, 2.5, 0, 0, 0, 1, -60, 2.5, 4 )
+
+[node name="PathL4" parent="Pillars" instance=ExtResource( 2 )]
+transform = Transform( 2, 0, 0, 0, 2.5, 0, 0, 0, 1, -68, 2.5, 4 )
+
+[node name="PathL5" parent="Pillars" instance=ExtResource( 2 )]
+transform = Transform( 2, 0, 0, 0, 2.5, 0, 0, 0, 1, -76, 2.5, 4 )
+
+[node name="PathL6" parent="Pillars" instance=ExtResource( 2 )]
+transform = Transform( 2, 0, 0, 0, 2.5, 0, 0, 0, 1, -84, 2.5, 4 )
+
+[node name="PathL7" parent="Pillars" instance=ExtResource( 2 )]
+transform = Transform( 2, 0, 0, 0, 2.5, 0, 0, 0, 1, -92, 2.5, 4 )
+
+[node name="PathL8" parent="Pillars" instance=ExtResource( 2 )]
+transform = Transform( 2, 0, 0, 0, 2.5, 0, 0, 0, 1, -100, 2.5, 4 )
+
+[node name="PathM" parent="Pillars" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 2.5, 0, 0, 0, 1, -48, 2.5, 0 )
+
+[node name="PathM2" parent="Pillars" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 2.5, 0, 0, 0, 1, -60, 2.5, 0 )
+
+[node name="PathM3" parent="Pillars" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 2.5, 0, 0, 0, 1, -72, 2.5, 0 )
+
+[node name="PathM4" parent="Pillars" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 2.5, 0, 0, 0, 1, -84, 2.5, 0 )
+
+[node name="PathM5" parent="Pillars" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 2.5, 0, 0, 0, 1, -96, 2.5, 0 )
+
+[node name="PathR" parent="Pillars" instance=ExtResource( 2 )]
+transform = Transform( 0.5, 0, 0, 0, 2.5, 0, 0, 0, 1, -50, 2.5, -4 )
+
+[node name="PathR2" parent="Pillars" instance=ExtResource( 2 )]
+transform = Transform( 0.5, 0, 0, 0, 2.5, 0, 0, 0, 1, -64, 2.5, -4 )
+
+[node name="PathR3" parent="Pillars" instance=ExtResource( 2 )]
+transform = Transform( 0.5, 0, 0, 0, 2.5, 0, 0, 0, 1, -78, 2.5, -4 )
+
+[node name="PathR4" parent="Pillars" instance=ExtResource( 2 )]
+transform = Transform( 0.5, 0, 0, 0, 2.5, 0, 0, 0, 1, -93, 2.5, -4 )
+
+[node name="Stair" type="Node" parent="."]
+
+[node name="Cube" parent="Stair" instance=ExtResource( 2 )]
+transform = Transform( 2, 0, 0, 0, 9, 0, 0, 0, 1, -122, 9, 0 )
+
+[node name="Cube5" parent="Stair" instance=ExtResource( 2 )]
+transform = Transform( 2, 0, 0, 0, 7.2, 0, 0, 0, 2, -118, 7.2, 0 )
+
+[node name="Cube6" parent="Stair" instance=ExtResource( 2 )]
+transform = Transform( 2, 0, 0, 0, 5.4, 0, 0, 0, 3, -114, 5.4, 0 )
+
+[node name="Cube7" parent="Stair" instance=ExtResource( 2 )]
+transform = Transform( 2, 0, 0, 0, 3.6, 0, 0, 0, 4, -110, 3.6, 0 )
+
+[node name="Cube8" parent="Stair" instance=ExtResource( 2 )]
+transform = Transform( 2, 0, 0, 0, 1.8, 0, 0, 0, 5, -106, 1.8, 0 )
+
+[node name="UpOrDown" type="Node" parent="."]
+
+[node name="Cube" parent="UpOrDown" instance=ExtResource( 2 )]
+transform = Transform( 15, 0, 0, 0, 3, 0, 0, 0, 0.1, -145, 18, 2 )
+
+[node name="Cube2" parent="UpOrDown" instance=ExtResource( 2 )]
+transform = Transform( 0.1, 0, 0, 0, 1, 0, 0, 0, 2, -135, 18.3, 0 )
+
+[node name="Cube3" parent="UpOrDown" instance=ExtResource( 2 )]
+transform = Transform( 0.1, 0, 0, 0, 1, 0, 0, 0, 2, -140, 18.3, 0 )
+
+[node name="Cube4" parent="UpOrDown" instance=ExtResource( 2 )]
+transform = Transform( 0.1, 0, 0, 0, 1, 0, 0, 0, 2, -145, 18.3, 0 )
+
+[node name="Cube5" parent="UpOrDown" instance=ExtResource( 2 )]
+transform = Transform( 0.1, 0, 0, 0, 1, 0, 0, 0, 2, -150, 18.3, 0 )
+
+[node name="Cube6" parent="UpOrDown" instance=ExtResource( 2 )]
+transform = Transform( 0.1, 0, 0, 0, 1, 0, 0, 0, 2, -155, 18.3, 0 )
+
+[node name="Cube7" parent="UpOrDown" instance=ExtResource( 2 )]
+transform = Transform( 15, 0, 0, 0, 8, 0, 0, 0, 2, -145, 8, 0 )
+
+[node name="Cube7" parent="." instance=ExtResource( 2 )]
+transform = Transform( 2, 0, 0, 0, 8, 0, 0, 0, 2, -175, 8, 0 )
+
+[node name="Cube8" parent="." instance=ExtResource( 2 )]
+transform = Transform( 0.1, 0, 0, 0, 10, 0, 0, 0, 2, -177, 10, 0 )
+
+[node name="Collectable" parent="." instance=ExtResource( 4 )]
+transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, -175, 17, 0 )
+
+[editable path="Player"]

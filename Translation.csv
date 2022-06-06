@@ -2,8 +2,9 @@ keys,en,pt
 TITLE,Parkatch,Parkatch
 NEWGAME,New Game,Novo Jogo
 SETTINGS,Settings,Opções
+QUIT,Quit,Sair
 CREATOR,Creator: Noskire,Criador: Noskire
-CREDITS,Character and Animation by\nMixamo in mixamo.com,Personagem e Animação por\nMixamo em mixamo.com
+CREDITS,Character and Animation by\nMixamo in mixamo.com\n\nMusic Fuzz Buzz by Soundroll\nfrom Uppbeat in uppbeat.io/t/soundroll/fuzz-buzz,Personagem e Animação por\nMixamo em mixamo.com\n\nMusica Fuzz Buzz de Soundroll\nem Uppbeat uppbeat.io/t/soundroll/fuzz-buzz
 STOPTIONS,Options,Opções
 STDISPLAYMODE,Display Mode,Modo de Exibição
 STWINDOWED,Windowed,Modo Janela
@@ -14,7 +15,7 @@ STBRIGHTNESS,Brightness,Brilho
 STLANGUAGE,Language,Idioma
 STLCHOOSE,Choose a Language,Escolha um Idioma
 STMUSIC,Master Volume,Volume Principal
-STKEYS,Keybind,Controles
+STKEYS,Keybind,Conf. Teclado
 STRESET,Reset Settings,Redefinir Teclas
 STSAVE,Save Settings,Salvar Teclas
 forward,Forward,Frente
@@ -31,7 +32,6 @@ PAUSED,Paused,Pausado
 RESUME,Resume,Retomar
 RESTART,Restart,Reiniciar
 MAINMENU,Main Menu,Menu Principal
-CONGRATS,Congratulations!\nYou finished the game!,Parabéns!\nVocê terminou o jogo!
 SCORE,Score:,Pontuação:
 PUTNAME,"To enter in the Leaderboard\nplease, type your name:","Para entrar no Ranking\npor favor, digite seu nome:"
 SENDSCORE,Send Score,Enviar Pontuação
@@ -39,3 +39,14 @@ SUBMITTING,Submitting...,Enviando...
 GETRANK,Getting your\nposition...,Obtendo sua\nposição...
 POSITION,Your Position:,Sua posição:
 GETBOARD,Getting the\nLeaderboard...,Obtendo o\nRanking...
+FOV,Field of View,Campo de Visão
+MOUSESENS,Mouse Sensibility,Sensibilidade do Mouse
+GAMEMODE,Game Mode:,Modo de Jogo:
+GMSCORE,Score Mode,Modo de Pontuação
+GMSTRAIN,Score Mode Training,Treinamento do Modo de Pontuação
+GMTIME,Time Trial,Contra-Relógio
+GMTTRAIN,Time Trial Training,Treinamento de Contra-Relógio
+CONGRATS,Congratulations!\nYou completed the level!,Parabéns!\nVocê concluiu o nível!
+CLIMBTUTO,"Next to a wall,\nkeep pressing 'Jump'\nto grab the ledge\nand climb up",Continue apertando 'Pular'\npróximo a uma parede\npara se segurar\ne subir
+STCONTROLLER,Joy Keybind,Conf. Controle
+USEMOUSE,*Use mouse to set Joy Keybind,*Use o mouse para configurar o controle

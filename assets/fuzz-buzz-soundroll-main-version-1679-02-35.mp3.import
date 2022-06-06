@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/fuzz-buzz-soundroll-main-version-1679-02-35.mp3-73869ca014a7a0d07ade94bce9f7fefe.mp3str"
+
+[deps]
+
+source_file="res://assets/fuzz-buzz-soundroll-main-version-1679-02-35.mp3"
+dest_files=[ "res://.import/fuzz-buzz-soundroll-main-version-1679-02-35.mp3-73869ca014a7a0d07ade94bce9f7fefe.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

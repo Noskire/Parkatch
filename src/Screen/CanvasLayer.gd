@@ -45,13 +45,17 @@ func send_name():
 	var body = str("{\"name\": \"", playerName, "\"}")
 	$HTTPRequest.request(url, custom_headers, true, HTTPClient.METHOD_PATCH, body)
 
-func send_score(time: int):
+func send_score(score: int):
 	sendScore = true
-	var url = "https://api.lootlocker.io/game/leaderboards/3487/submit"
+	var url
+	if GlobalSettings.gameMode == 1:
+		url = "https://api.lootlocker.io/game/leaderboards/3487/submit"
+	elif GlobalSettings.gameMode == 2:
+		url = "https://api.lootlocker.io/game/leaderboards/3520/submit"
 	var custom_headers: PoolStringArray
 	custom_headers.append("Content-Type: application/json")
 	custom_headers.append(str("x-session-token: ", token))
-	var body = str("{\"score\": ", time, "}")
+	var body = str("{\"score\": ", score, "}")
 	$HTTPRequest.request(url, custom_headers, true, HTTPClient.METHOD_POST, body)
 
 func get_leaderboard():
@@ -61,7 +65,11 @@ func get_leaderboard():
 	for n in board.get_children():
 		board.remove_child(n)
 		n.queue_free()
-	var url = "https://api.lootlocker.io/game/leaderboards/3487/list?count=10"
+	var url
+	if GlobalSettings.gameMode == 1:
+		url = "https://api.lootlocker.io/game/leaderboards/3487/list?count=10"
+	elif GlobalSettings.gameMode == 2:
+		url = "https://api.lootlocker.io/game/leaderboards/3520/list?count=10"
 	var custom_headers: PoolStringArray
 	custom_headers.append("Content-Type: application/json")
 	custom_headers.append(str("x-session-token: ", token))
@@ -72,7 +80,11 @@ func get_rank():
 		getRank = true
 		rankLoading.set_visible(true)
 		var rankRange = str(playerRank - 3)
-		var url = str("https://api.lootlocker.io/game/leaderboards/3487/list?count=5&after=", rankRange)
+		var url
+		if GlobalSettings.gameMode == 1:
+			url = str("https://api.lootlocker.io/game/leaderboards/3487/list?count=5&after=", rankRange)
+		elif GlobalSettings.gameMode == 2:
+			url = str("https://api.lootlocker.io/game/leaderboards/3520/list?count=5&after=", rankRange)
 		var custom_headers: PoolStringArray
 		custom_headers.append("Content-Type: application/json")
 		custom_headers.append(str("x-session-token: ", token))
@@ -91,7 +103,10 @@ func _on_request_completed(_result, _response_code, _headers, body):
 		fill_top10(json)
 	elif sendName:
 		sendName = false
-		send_score(GlobalSettings.ballsOnTime)
+		if GlobalSettings.gameMode == 1:
+			send_score(GlobalSettings.ballsOnTime)
+		elif GlobalSettings.gameMode == 2:
+			send_score(GlobalSettings.bestTime)
 	elif sendScore:
 		sendScore = false
 		enterBoardLoading.set_visible(false)
@@ -121,14 +136,22 @@ func fill_top10(json):
 	lbl2.set_text("")
 	board.add_child(lbl2)
 	for keys in json.result.items:
-		#print(keys)
 		var label1 = Label.new()
 		label1.set_h_size_flags(Control.SIZE_EXPAND_FILL)
 		label1.set_text(str(keys.rank, ": ", keys.player.name))
 		board.add_child(label1)
 		var label2 = Label.new()
 		label2.set_h_size_flags(Control.SIZE_EXPAND_FILL)
-		label2.set_text(str(" — ", keys.score))
+		if GlobalSettings.gameMode == 1:
+			label2.set_text(str(" — ", keys.score))
+		elif GlobalSettings.gameMode == 2:
+			var timer = keys.score
+			var minute = int(timer / 60)
+			var second = int(timer - minute * 60)
+			if second < 10:
+				label2.set_text(str(" — ", minute, ":0", second))
+			else:
+				label2.set_text(str(" — ", minute, ":", second))
 		board.add_child(label2)
 	boardLoading.set_visible(false)
 	board.set_visible(true)
@@ -153,7 +176,16 @@ func fill_your_rank(json):
 		rankBoard.add_child(label1)
 		var label2 = Label.new()
 		label2.set_h_size_flags(Control.SIZE_EXPAND_FILL)
-		label2.set_text(str(" — ", keys.score))
+		if GlobalSettings.gameMode == 1:
+			label2.set_text(str(" — ", keys.score))
+		elif GlobalSettings.gameMode == 2:
+			var timer = keys.score
+			var minute = int(timer / 60)
+			var second = int(timer - minute * 60)
+			if second < 10:
+				label2.set_text(str(" — ", minute, ":0", second))
+			else:
+				label2.set_text(str(" — ", minute, ":", second))
 		rankBoard.add_child(label2)
 	rankLoading.set_visible(false)
 	rankBoard.set_visible(true)

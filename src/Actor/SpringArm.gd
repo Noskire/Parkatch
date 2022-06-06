@@ -5,6 +5,11 @@ export var controllerSensitivity = 2.5
 export var camInputFrozen = false
 
 func _ready() -> void:
+	var err
+	err = GlobalSettings.connect("fov_updated", self, "_on_fov_updated")
+	err = GlobalSettings.connect("mouse_sens_updated", self, "_on_mouse_sens_updated")
+	if err != OK:
+		print("Error Connect")
 	set_as_toplevel(true)
 	capture_mouse()
 
@@ -15,7 +20,7 @@ func _physics_process(_delta: float) -> void:
 	rotation_degrees.x -= (Input.get_action_strength("cam_down") - Input.get_action_strength("cam_up")) * controllerSensitivity
 	rotation_degrees.x = clamp(rotation_degrees.x, -90.0, 0.0)
 	
-	rotation_degrees.y += (Input.get_action_strength("cam_right") - Input.get_action_strength("cam_left")) * controllerSensitivity
+	rotation_degrees.y -= (Input.get_action_strength("cam_right") - Input.get_action_strength("cam_left")) * controllerSensitivity
 	rotation_degrees.y = wrapf(rotation_degrees.y, 0.0, 360.0)
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -25,3 +30,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		
 		rotation_degrees.y -= event.relative.x * mouseSensitivity
 		rotation_degrees.y = wrapf(rotation_degrees.y, 0.0, 360.0)
+
+func _on_fov_updated(value):
+	$Camera.fov = value
+
+func _on_mouse_sens_updated(value):
+	mouseSensitivity = value

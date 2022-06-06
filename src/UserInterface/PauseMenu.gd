@@ -3,6 +3,7 @@ extends Control
 onready var sceneTree: = get_tree()
 onready var pauseOverlay: ColorRect = get_node("PauseOverlay")
 onready var camera: SpringArm = get_parent().get_parent().get_node("SpringArm")
+onready var settingsMenu = get_node("SettingsMenu")
 
 export(String, FILE) var next_scene_path: = ""
 
@@ -30,6 +31,9 @@ func _on_Restart_button_up():
 	err = sceneTree.reload_current_scene()
 	if err != OK:
 		print("Error reload_scene RestartButton")
+
+func _on_Settings_button_up():
+	settingsMenu.popup_centered()
 
 func _on_MainMenu_button_up():
 	sceneTree.paused = false

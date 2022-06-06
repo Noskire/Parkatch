@@ -2,6 +2,7 @@ extends Node
 
 const SAVEFILE = "user://saveFile.save"
 const SAVEKEYS = "user://keyBinds.ini"
+const SAVECONTROLLER = "user://controllerBinds.ini"
 
 var standard_keybinds = {
 	"forward": 87,
@@ -11,16 +12,26 @@ var standard_keybinds = {
 	"jump": 32,
 	"run": 16777237,
 	"crouch": 67,
-	"pause": 16777217
+	"pause": 82
+}
+
+var standard_controller = {
+	"jump": JOY_XBOX_Y,
+	"run": JOY_XBOX_B,
+	"crouch": JOY_XBOX_A,
+	"pause": JOY_START
 }
 
 var game_data = {}
 var keybinds = {}
+var controller = {}
 var configfile
+var joyconfigfile
 
 func _ready():
 	load_data()
 	load_keys()
+	load_joykeys()
 
 func load_data():
 	var file = File.new()
@@ -31,7 +42,9 @@ func load_data():
 			"vsync_on": true,
 			"brightness": 1,
 			"master_vol": -10,
-			"language": "en"
+			"language": "en",
+			"fov": 70,
+			"mouse_sens": 0.05
 		}
 		save_data()
 	file.open(SAVEFILE, File.READ)
@@ -55,6 +68,23 @@ func load_keys():
 		configfile.save(SAVEKEYS)
 		keybinds = standard_keybinds.duplicate()
 
+func load_joykeys():
+	joyconfigfile = ConfigFile.new()
+	if joyconfigfile.load(SAVECONTROLLER) == OK:
+		for key in joyconfigfile.get_section_keys("keybinds"):
+			var key_value = joyconfigfile.get_value("keybinds", key)
+			if str(key_value) != "":
+				controller[key] = key_value
+			else:
+				controller[key] = null
+	else:
+		# Create .ini file
+		for key in standard_controller.keys():
+			var key_value = standard_controller[key]
+			joyconfigfile.set_value("keybinds", key, key_value)
+		joyconfigfile.save(SAVECONTROLLER)
+		controller = standard_controller.duplicate()
+
 func save_data():
 	var file = File.new()
 	file.open(SAVEFILE, File.WRITE)
@@ -69,3 +99,12 @@ func save_keys():
 		else:
 			configfile.set_value("keybinds", key, "")
 	configfile.save(SAVEKEYS)
+
+func save_joykeys():
+	for key in controller.keys():
+		var key_value = controller[key]
+		if key_value != null:
+			configfile.set_value("keybinds", key, key_value)
+		else:
+			configfile.set_value("keybinds", key, "")
+	configfile.save(SAVECONTROLLER)
