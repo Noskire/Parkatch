@@ -1,0 +1,41 @@
+keys,en,pt
+TITLE,Parkatch,Parkatch
+NEWGAME,New Game,Novo Jogo
+SETTINGS,Settings,Opções
+CREATOR,Creator: Noskire,Criador: Noskire
+CREDITS,Character and Animation by\nMixamo in mixamo.com,Personagem e Animação por\nMixamo em mixamo.com
+STOPTIONS,Options,Opções
+STDISPLAYMODE,Display Mode,Modo de Exibição
+STWINDOWED,Windowed,Modo Janela
+STFULLSCREEN,FullScreen,Tela Cheia
+STBLOOM,Bloom,Bloom
+STVSYNC,VSync,VSync
+STBRIGHTNESS,Brightness,Brilho
+STLANGUAGE,Language,Idioma
+STLCHOOSE,Choose a Language,Escolha um Idioma
+STMUSIC,Master Volume,Volume Principal
+STKEYS,Keybind,Controles
+STRESET,Reset Settings,Redefinir Teclas
+STSAVE,Save Settings,Salvar Teclas
+forward,Forward,Frente
+left,Left,Esquerda
+back,Back,Trás
+right,Right,Direita
+jump,Jump,Pular
+run,Run,Correr
+crouch,Crouch,Agachar
+pause,Pause,Pausar
+STKUNASSIGNED,Unassigned,Sem Tecla
+STKPRESSKEY,Press Any Key:,Aperte uma Tecla:
+PAUSED,Paused,Pausado
+RESUME,Resume,Retomar
+RESTART,Restart,Reiniciar
+MAINMENU,Main Menu,Menu Principal
+CONGRATS,Congratulations!\nYou finished the game!,Parabéns!\nVocê terminou o jogo!
+SCORE,Score:,Pontuação:
+PUTNAME,"To enter in the Leaderboard\nplease, type your name:","Para entrar no Ranking\npor favor, digite seu nome:"
+SENDSCORE,Send Score,Enviar Pontuação
+SUBMITTING,Submitting...,Enviando...
+GETRANK,Getting your\nposition...,Obtendo sua\nposição...
+POSITION,Your Position:,Sua posição:
+GETBOARD,Getting the\nLeaderboard...,Obtendo o\nRanking...

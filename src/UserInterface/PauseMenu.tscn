@@ -1,0 +1,75 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/ui_theme.tres" type="Theme" id=1]
+[ext_resource path="res://src/UserInterface/PauseMenu.gd" type="Script" id=2]
+
+[node name="PauseMenu" type="Control"]
+pause_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 1 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+next_scene_path = "res://src/Screen/MainScreen.tscn"
+
+[node name="PauseOverlay" type="ColorRect" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.12549, 0.235294, 0.337255, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Paused" type="Label" parent="PauseOverlay"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -58.0
+margin_top = 158.089
+margin_right = 58.0
+margin_bottom = 198.089
+text = "PAUSED"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBox" type="VBoxContainer" parent="PauseOverlay"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -200.0
+margin_top = -150.0
+margin_right = 200.0
+margin_bottom = 150.0
+rect_min_size = Vector2( 400, 300 )
+custom_constants/separation = 25
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Resume" type="Button" parent="PauseOverlay/VBox"]
+margin_right = 400.0
+margin_bottom = 83.0
+size_flags_vertical = 3
+text = "RESUME"
+
+[node name="Restart" type="Button" parent="PauseOverlay/VBox"]
+margin_top = 108.0
+margin_right = 400.0
+margin_bottom = 191.0
+size_flags_vertical = 3
+text = "RESTART"
+
+[node name="MainMenu" type="Button" parent="PauseOverlay/VBox"]
+margin_top = 216.0
+margin_right = 400.0
+margin_bottom = 300.0
+size_flags_vertical = 3
+text = "MAINMENU"
+
+[connection signal="button_up" from="PauseOverlay/VBox/Resume" to="." method="_on_Resume_button_up"]
+[connection signal="button_up" from="PauseOverlay/VBox/Restart" to="." method="_on_Restart_button_up"]
+[connection signal="button_up" from="PauseOverlay/VBox/MainMenu" to="." method="_on_MainMenu_button_up"]

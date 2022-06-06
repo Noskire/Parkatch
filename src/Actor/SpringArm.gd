@@ -6,9 +6,12 @@ export var camInputFrozen = false
 
 func _ready() -> void:
 	set_as_toplevel(true)
+	capture_mouse()
+
+func capture_mouse():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	rotation_degrees.x -= (Input.get_action_strength("cam_down") - Input.get_action_strength("cam_up")) * controllerSensitivity
 	rotation_degrees.x = clamp(rotation_degrees.x, -90.0, 0.0)
 	

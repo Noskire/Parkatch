@@ -1,0 +1,216 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://src/UserInterface/SettingsMenu.gd" type="Script" id=1]
+[ext_resource path="res://assets/ui_theme.tres" type="Theme" id=2]
+
+[node name="SettingsMenu" type="Popup"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -1280.0
+margin_top = -450.0
+margin_bottom = 270.0
+theme = ExtResource( 2 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Tabs" type="TabContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="STOPTIONS" type="Tabs" parent="Tabs"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 25.0
+margin_top = 56.0
+margin_right = -25.0
+margin_bottom = -25.0
+
+[node name="Margin" type="MarginContainer" parent="Tabs/STOPTIONS"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/margin_right = 25
+custom_constants/margin_top = 25
+custom_constants/margin_left = 25
+custom_constants/margin_bottom = 25
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Grid" type="GridContainer" parent="Tabs/STOPTIONS/Margin"]
+margin_left = 25.0
+margin_top = 25.0
+margin_right = 1205.0
+margin_bottom = 614.0
+columns = 2
+
+[node name="DisplayMode" type="Label" parent="Tabs/STOPTIONS/Margin/Grid"]
+margin_right = 237.0
+margin_bottom = 40.0
+text = "STDISPLAYMODE"
+
+[node name="DisplayOptions" type="OptionButton" parent="Tabs/STOPTIONS/Margin/Grid"]
+margin_left = 960.0
+margin_right = 1180.0
+margin_bottom = 40.0
+size_flags_horizontal = 10
+text = "STWINDOWED"
+items = [ "STWINDOWED", null, false, 0, null, "STFULLSCREEN", null, false, 1, null ]
+selected = 0
+
+[node name="Bloom" type="Label" parent="Tabs/STOPTIONS/Margin/Grid"]
+margin_top = 44.0
+margin_right = 237.0
+margin_bottom = 84.0
+text = "STBLOOM"
+
+[node name="BloomBtn" type="CheckButton" parent="Tabs/STOPTIONS/Margin/Grid"]
+margin_left = 1116.0
+margin_top = 44.0
+margin_right = 1180.0
+margin_bottom = 84.0
+size_flags_horizontal = 10
+
+[node name="Vsync" type="Label" parent="Tabs/STOPTIONS/Margin/Grid"]
+margin_top = 88.0
+margin_right = 237.0
+margin_bottom = 128.0
+text = "STVSYNC"
+
+[node name="VsyncBtn" type="CheckButton" parent="Tabs/STOPTIONS/Margin/Grid"]
+margin_left = 1116.0
+margin_top = 88.0
+margin_right = 1180.0
+margin_bottom = 128.0
+size_flags_horizontal = 10
+
+[node name="Brightness" type="Label" parent="Tabs/STOPTIONS/Margin/Grid"]
+margin_top = 132.0
+margin_right = 237.0
+margin_bottom = 172.0
+text = "STBRIGHTNESS"
+
+[node name="HBox" type="HBoxContainer" parent="Tabs/STOPTIONS/Margin/Grid"]
+margin_left = 916.0
+margin_top = 132.0
+margin_right = 1180.0
+margin_bottom = 172.0
+size_flags_horizontal = 10
+
+[node name="BgtValue" type="Label" parent="Tabs/STOPTIONS/Margin/Grid/HBox"]
+margin_right = 10.0
+margin_bottom = 40.0
+text = "1"
+
+[node name="BgtSlider" type="HSlider" parent="Tabs/STOPTIONS/Margin/Grid/HBox"]
+margin_left = 14.0
+margin_right = 264.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 250, 0 )
+size_flags_vertical = 1
+
+[node name="MasterVol" type="Label" parent="Tabs/STOPTIONS/Margin/Grid"]
+margin_top = 176.0
+margin_right = 237.0
+margin_bottom = 216.0
+text = "STMUSIC"
+
+[node name="HBox2" type="HBoxContainer" parent="Tabs/STOPTIONS/Margin/Grid"]
+margin_left = 890.0
+margin_top = 176.0
+margin_right = 1180.0
+margin_bottom = 216.0
+size_flags_horizontal = 10
+
+[node name="VolValue" type="Label" parent="Tabs/STOPTIONS/Margin/Grid/HBox2"]
+margin_right = 36.0
+margin_bottom = 40.0
+text = "-10"
+
+[node name="VolSlider" type="HSlider" parent="Tabs/STOPTIONS/Margin/Grid/HBox2"]
+margin_left = 40.0
+margin_right = 290.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 250, 0 )
+size_flags_vertical = 1
+min_value = -50.0
+max_value = 0.0
+
+[node name="Language" type="Label" parent="Tabs/STOPTIONS/Margin/Grid"]
+margin_top = 220.0
+margin_right = 237.0
+margin_bottom = 260.0
+text = "STLANGUAGE"
+
+[node name="Languages" type="OptionButton" parent="Tabs/STOPTIONS/Margin/Grid"]
+margin_left = 1009.0
+margin_top = 220.0
+margin_right = 1180.0
+margin_bottom = 260.0
+size_flags_horizontal = 10
+text = "STLCHOOSE"
+items = [ "STLCHOOSE", null, false, 0, null, "English", null, false, 1, null, "Português", null, false, 2, null ]
+selected = 0
+
+[node name="STKEYS" type="Tabs" parent="Tabs"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 25.0
+margin_top = 56.0
+margin_right = -25.0
+margin_bottom = -25.0
+
+[node name="Margin" type="MarginContainer" parent="Tabs/STKEYS"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/margin_right = 25
+custom_constants/margin_top = 25
+custom_constants/margin_left = 25
+custom_constants/margin_bottom = 25
+
+[node name="Grid" type="GridContainer" parent="Tabs/STKEYS/Margin"]
+margin_left = 25.0
+margin_top = 25.0
+margin_right = 1205.0
+margin_bottom = 614.0
+columns = 2
+
+[node name="Reset" type="Button" parent="Tabs/STKEYS/Margin/Grid"]
+margin_left = 236.0
+margin_right = 351.0
+margin_bottom = 40.0
+size_flags_horizontal = 6
+text = "STRESET"
+
+[node name="Save" type="Button" parent="Tabs/STKEYS/Margin/Grid"]
+margin_left = 832.0
+margin_right = 939.0
+margin_bottom = 40.0
+size_flags_horizontal = 6
+text = "STSAVE"
+
+[node name="X" type="Tabs" parent="Tabs"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = 36.0
+margin_bottom = -4.0
+
+[connection signal="tab_selected" from="Tabs" to="." method="_on_Tabs_tab_selected"]
+[connection signal="item_selected" from="Tabs/STOPTIONS/Margin/Grid/DisplayOptions" to="." method="_on_DisplayOptions_item_selected"]
+[connection signal="toggled" from="Tabs/STOPTIONS/Margin/Grid/BloomBtn" to="." method="_on_BloomBtn_toggled"]
+[connection signal="toggled" from="Tabs/STOPTIONS/Margin/Grid/VsyncBtn" to="." method="_on_VsyncBtn_toggled"]
+[connection signal="value_changed" from="Tabs/STOPTIONS/Margin/Grid/HBox/BgtSlider" to="." method="_on_BgtSlider_value_changed"]
+[connection signal="value_changed" from="Tabs/STOPTIONS/Margin/Grid/HBox2/VolSlider" to="." method="_on_VolSlider_value_changed"]
+[connection signal="item_selected" from="Tabs/STOPTIONS/Margin/Grid/Languages" to="." method="_on_Languages_item_selected"]
+[connection signal="button_up" from="Tabs/STKEYS/Margin/Grid/Reset" to="." method="_on_Reset_button_up"]
+[connection signal="button_up" from="Tabs/STKEYS/Margin/Grid/Save" to="." method="_on_Save_button_up"]

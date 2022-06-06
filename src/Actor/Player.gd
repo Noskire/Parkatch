@@ -1,5 +1,6 @@
 extends KinematicBody
 
+onready var sceneTree: = get_tree()
 onready var bodyAnim: AnimationPlayer = $Michelle/RootNode/AnimationPlayer
 onready var collisionStand: CollisionShape = $CollisionShape
 onready var collisionCrouch: CollisionShape = $CollisionShapeCrouched
@@ -8,8 +9,10 @@ onready var camera: Camera = $SpringArm/Camera
 onready var tween = $Tween
 onready var headRays = $HeadRays
 onready var chestRay = $Chest
+onready var ltimer = $CanvasLayer/Control/Timer
+onready var lscore = $CanvasLayer/Control/Score
 
-onready var body_to_move = self
+export(String, FILE) var screen_path: = ""
 
 export var speed = 7.0
 export var walkSpeed = 7.0
@@ -25,6 +28,9 @@ var gravity
 var canJump = true
 var isCrouching = false
 
+var score = 0
+var timer = 2 * 60.0 # Max time, 2m
+
 # States
 var IDLE = false
 var RUN = false
@@ -34,7 +40,7 @@ var HANGING = false
 var SLIDE = false
 
 func _ready():
-	#OS.window_fullscreen = true
+	ltimer.set_text("2:00")
 	gravity = jumpGravity
 	bodyAnim.play("Idle")
 	var err = bodyAnim.connect("animation_finished", self, "on_animation_finished")
@@ -42,6 +48,18 @@ func _ready():
 		print("ERROR: Connection with bodyAnim")
 
 func _physics_process(delta: float) -> void:
+	timer -= delta
+	var minute = int(timer / 60)
+	var second = int(timer - minute * 60)
+	if second < 10:
+		ltimer.set_text(str(minute, ":0", second))
+	else:
+		ltimer.set_text(str(minute, ":", second))
+	lscore.set_text(str(score))
+	
+	if timer <= 0:
+		end_level()
+	
 	var moveDirection = Vector3.ZERO
 	
 	if not HANGING:
@@ -49,7 +67,7 @@ func _physics_process(delta: float) -> void:
 		moveDirection.z = Input.get_action_strength("back") - Input.get_action_strength("forward")
 		moveDirection = moveDirection.rotated(Vector3.UP, springArm.rotation.y).normalized()
 	
-	if Input.is_action_pressed("run"):
+	if Input.is_action_pressed("run") and not CROUCHED:
 		speed = runSpeed
 		RUN = true
 	else:
@@ -78,9 +96,13 @@ func _physics_process(delta: float) -> void:
 	velocity.z = moveDirection.z * speed
 	velocity.y -= gravity * delta
 	
+	
+	if JUMP and is_on_floor():
+		JUMP = false
+
 	var justLanded = is_on_floor() and snapVector == Vector3.ZERO
 	var isJumping = is_on_floor() and Input.is_action_just_pressed("jump")
-	if isJumping:
+	if isJumping and not SLIDE:
 		velocity.y = jumpStrength
 		snapVector = Vector3.ZERO
 		JUMP = true
@@ -106,16 +128,14 @@ func _physics_process(delta: float) -> void:
 		if lookDirection.angle() != 0:
 			rotation.y = lookDirection.angle()
 	
-	if Input.is_action_pressed("Quit"):
-		get_tree().quit()
-	
 	handle_body_anim()
 
 func _process(_delta: float) -> void:
 	springArm.translation = translation
 
 func handle_body_anim():
-	if bodyAnim.current_animation != "Jump" and bodyAnim.current_animation != "RunJump" and bodyAnim.current_animation != "HangToCrouch" and bodyAnim.current_animation != "Slide":
+	#if bodyAnim.current_animation != "Jump" and bodyAnim.current_animation != "RunJump" and bodyAnim.current_animation != "HangToCrouch" and bodyAnim.current_animation != "Slide":
+	if not JUMP and not HANGING and bodyAnim.current_animation != "Slide":
 		if CROUCHED:
 			if IDLE:
 				bodyAnim.play("Crouched")
@@ -128,6 +148,9 @@ func handle_body_anim():
 				bodyAnim.play("FastRun")
 			else:
 				bodyAnim.play("Walking")
+
+func getPoint():
+	score += 1
 
 func can_climb() -> bool:
 	if not chestRay.is_colliding():
@@ -184,17 +207,17 @@ func on_animation_finished(anim_name):
 		if SLIDE:
 			collisionStand.set_disabled(false)
 			collisionCrouch.set_disabled(true)
-		JUMP = false
-		CROUCHED = false
-		SLIDE = false
-		bodyAnim.play("Idle")
+		if JUMP and not is_on_floor():
+			pass
+		else:
+			JUMP = false
+			CROUCHED = false
+			SLIDE = false
+			bodyAnim.play("Idle")
 
-# Not Used
-func disable_ledge_grabbing():
-	chestRay.enabled = false
-
-func enable_ledge_grabbing():
-	chestRay.enabled = true
-
-func release_ledge():
-	disable_ledge_grabbing()
+func end_level():
+	GlobalSettings.ballsOnTime = score
+	var err
+	err = sceneTree.change_scene(screen_path)
+	if err != OK:
+		print("Error change_scene Player to ", screen_path)

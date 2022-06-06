@@ -1,0 +1,231 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://assets/ui_theme.tres" type="Theme" id=1]
+[ext_resource path="res://src/Screen/EndScreen.gd" type="Script" id=2]
+[ext_resource path="res://src/Screen/CanvasLayer.gd" type="Script" id=3]
+
+[node name="EndScreen" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 1 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+screen_path = "res://src/Screen/MainScreen.tscn"
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.12549, 0.235294, 0.337255, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -1280.0
+margin_top = -542.378
+margin_bottom = 537.622
+color = Color( 0.0509804, 0.168627, 0.270588, 0.294118 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect3" type="ColorRect" parent="."]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -640.0
+margin_top = -540.0
+margin_bottom = 540.0
+color = Color( 0.0509804, 0.168627, 0.270588, 0.294118 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+script = ExtResource( 3 )
+
+[node name="HTTPRequest" type="HTTPRequest" parent="CanvasLayer"]
+
+[node name="Congrats" type="Label" parent="."]
+margin_left = 25.0
+margin_top = 60.6762
+margin_right = 615.0
+margin_bottom = 100.676
+size_flags_vertical = 2
+text = "CONGRATS"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Score" type="Label" parent="."]
+margin_left = 25.0
+margin_top = 151.056
+margin_right = 615.0
+margin_bottom = 191.056
+size_flags_vertical = 2
+text = "SCORE"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MainMenu" type="Button" parent="."]
+margin_left = 120.0
+margin_top = 275.889
+margin_right = 520.0
+margin_bottom = 375.889
+size_flags_horizontal = 5
+size_flags_vertical = 3
+text = "MENU"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="EnterBoard" type="Control" parent="."]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_top = -540.0
+margin_right = 640.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Margin" type="MarginContainer" parent="EnterBoard"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/margin_right = 25
+custom_constants/margin_top = 25
+custom_constants/margin_left = 25
+custom_constants/margin_bottom = 25
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBox" type="VBoxContainer" parent="EnterBoard/Margin"]
+margin_left = 25.0
+margin_top = 25.0
+margin_right = 615.0
+margin_bottom = 515.0
+custom_constants/separation = 25
+
+[node name="PutName" type="Label" parent="EnterBoard/Margin/VBox"]
+margin_right = 590.0
+margin_bottom = 40.0
+text = "PUTNAME"
+align = 1
+
+[node name="PlayerName" type="LineEdit" parent="EnterBoard/Margin/VBox"]
+margin_left = 95.0
+margin_top = 65.0
+margin_right = 495.0
+margin_bottom = 165.0
+rect_min_size = Vector2( 400, 100 )
+size_flags_horizontal = 4
+size_flags_vertical = 4
+align = 1
+max_length = 16
+
+[node name="SendScore" type="Button" parent="EnterBoard/Margin/VBox"]
+margin_left = 95.0
+margin_top = 190.0
+margin_right = 495.0
+margin_bottom = 290.0
+rect_min_size = Vector2( 400, 100 )
+size_flags_horizontal = 4
+size_flags_vertical = 4
+disabled = true
+text = "SENDSCORE"
+
+[node name="Loading" type="Label" parent="EnterBoard/Margin"]
+visible = false
+margin_left = 25.0
+margin_top = 250.0
+margin_right = 615.0
+margin_bottom = 290.0
+text = "SUBMITTING"
+align = 1
+
+[node name="YourRank" type="Control" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -320.0
+margin_right = 320.0
+margin_bottom = 1080.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Margin" type="MarginContainer" parent="YourRank"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/margin_right = 25
+custom_constants/margin_top = 25
+custom_constants/margin_left = 25
+custom_constants/margin_bottom = 25
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Loading" type="Label" parent="YourRank/Margin"]
+visible = false
+margin_left = 25.0
+margin_top = 25.0
+margin_right = 615.0
+margin_bottom = 65.0
+size_flags_vertical = 0
+text = "GETRANK"
+align = 1
+
+[node name="Grid" type="GridContainer" parent="YourRank/Margin"]
+margin_left = 25.0
+margin_top = 25.0
+margin_right = 615.0
+margin_bottom = 1055.0
+columns = 2
+
+[node name="HighScore" type="Control" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -640.0
+margin_bottom = 1080.0
+
+[node name="Margin" type="MarginContainer" parent="HighScore"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/margin_right = 25
+custom_constants/margin_top = 25
+custom_constants/margin_left = 25
+custom_constants/margin_bottom = 25
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Loading" type="Label" parent="HighScore/Margin"]
+visible = false
+margin_left = 25.0
+margin_top = 25.0
+margin_right = 615.0
+margin_bottom = 65.0
+size_flags_vertical = 0
+text = "GETBOARD"
+align = 1
+
+[node name="Top10" type="GridContainer" parent="HighScore/Margin"]
+margin_left = 25.0
+margin_top = 25.0
+margin_right = 615.0
+margin_bottom = 1055.0
+columns = 2
+
+[connection signal="request_completed" from="CanvasLayer/HTTPRequest" to="CanvasLayer" method="_on_request_completed"]
+[connection signal="button_up" from="MainMenu" to="." method="_on_MainMenu_button_up"]
+[connection signal="text_changed" from="EnterBoard/Margin/VBox/PlayerName" to="CanvasLayer" method="_on_PlayerName_text_changed"]
+[connection signal="button_up" from="EnterBoard/Margin/VBox/SendScore" to="CanvasLayer" method="_on_SendScore_button_up"]
